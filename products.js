@@ -3,13 +3,13 @@ const domain = 'http://35.225.243.133'
 $(document).ready(function () {
     var card = document.getElementsByClassName('card');
     for (var i = 0; i < card.length; i++) {
-        card[i].addEventListener('click', function () {
-            var img = this.children[0].getAttribute('src');
+       document.querySelector('.cards_imgs').addEventListener('click', function () {
+           
+            var img = product_img.getAttribute('src');
             var product_name = this.children[1].innerHTML;
             var product_unit = this.children[2].innerHTML;
             var product_price = this.children[3].innerHTML;
 
-            console.log(this.children);
             document.querySelector('.right-bar').classList.toggle('show2');
 
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
         product_name.classList.add('product_name');
 
         product_div.addEventListener('click', function (event) {
-            addOnClick(event, this);
+            // addOnClick(event, this);
         })
 
         let name_span = document.createElement('span');
@@ -154,17 +154,15 @@ $(document).ready(function () {
             },
             success: function (response) {
                 
-                console.log(response);
                 for(products of response){
                 addingProducts(products);
             }
         }
         })
     }
-    document.querySelector('.picture-buttons-logout').addEventListener('click',function(){
+    document.querySelector('.picture-buttons-logout').addEventListener('click',function(event){
+        event.preventDefault();
         localStorage.removeItem("token");
-        console.log('asa');
-        window.location('pick.html');
-        console.log('da');
+        window.location='pick.html';
     })
 });

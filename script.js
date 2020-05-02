@@ -248,6 +248,7 @@ $(document).ready(function () {
             }
         })
     })
+  
 })
 
 document.querySelector('.modal_sign_up_btn').addEventListener('click', function (event) {
@@ -261,7 +262,14 @@ document.querySelector('.modal_login_btn').addEventListener('click', function (e
     document.querySelector('.login_modal').classList.remove('d-none');
 })
 
-
+var data = [];
+if(localStorage.getItem('product_array')){
+    // console.log(localStorage.getItem('product_array'));
+    data =localStorage.getItem('product_array').replace('},','}!').split('!');
+    for (let x in data){
+    console.log(JSON.parse(x));
+}
+}
 
 
 
@@ -463,22 +471,23 @@ function addOnClick(e,x) {
 
 
             }
-            var data = [];
+            
             function saveStorage(){
-                // let parent = document.querySelectorAll(`[card_title="${product_name}"]`);
-                // let products_name_for = x.querySelector('.name_span').textContent;
-                // let count_of_products = parseInt(parent[0].querySelector('.products-count').textContent);
-                // localStorage.setItem(products_name,count_of_products);
-                // let price_sum = document.querySelector('.price-sums').textContent;
-                // localStorage.setItem(products_name,count_of_products);
-                // localStorage.getItem
-               
+                let parent = document.querySelectorAll(`[card_title="${product_name}"]`);
+                let count_of_products = parseInt(parent[0].querySelector('.products-count').textContent);
+                let price_sum = document.querySelector('.price-sums').textContent;
                 var saveData = {
-                    'product_name': 'name',
-
+                    "prd_name": product_name,
+                    "prd_count": count_of_products,
+                    "prd_sum": price_sum,
                 }
                 data.push(JSON.stringify(saveData));
                 localStorage.setItem('product_array',data);
+                for (let x of data){
+                    if(x['prd_name']){
+
+                    }
+                }
             }
 
 
@@ -551,6 +560,7 @@ function addOnClick(e,x) {
         document.querySelector('.price-place').innerText = prdct_price;
         
     }
+   
 }
     
 
