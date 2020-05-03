@@ -133,8 +133,8 @@ $(document).ready(function () {
         product_div.appendChild(product_name);
         product_name.classList.add('product_name');
 
-        product_div.addEventListener('click', function(event){
-            addOnClick(event,this);
+        product_div.addEventListener('click', function (event) {
+            addOnClick(event, this);
         })
 
         let name_span = document.createElement('span');
@@ -142,7 +142,7 @@ $(document).ready(function () {
         let unit_name_span = document.createElement('span');
         let unit_count_together = document.createElement('span');
         unit_name_span.classList.add('product-unit');
-        
+
         name_span.innerText = product.title;
         unit_count_span.innerText = product.amount_by_unit;
         unit_name_span.innerText = product.unit;
@@ -201,11 +201,11 @@ $(document).ready(function () {
             data: formData,
             method: 'POST',
             success: function (response) {
-                
+
                 localStorage.setItem('token', response.token);
                 window.location = 'products.html';
-               
-                
+
+
             },
             error: function (error_response) {
                 let error_messages = error_response.responseJSON;
@@ -243,12 +243,12 @@ $(document).ready(function () {
                     let input = document.querySelector(`#form-id-2 [name="${message_name}"`);
                     let small_tag = input.parentElement.querySelector('small');
                     small_tag.innerText = error_messages[message_name];
-                    
+
                 }
             }
         })
     })
-  
+
 })
 
 document.querySelector('.modal_sign_up_btn').addEventListener('click', function (event) {
@@ -263,12 +263,10 @@ document.querySelector('.modal_login_btn').addEventListener('click', function (e
 })
 
 var data = [];
-if(localStorage.getItem('product_array')){
-    // console.log(localStorage.getItem('product_array'));
-    data =localStorage.getItem('product_array').replace('},','}!').split('!');
-    for (let x in data){
-    console.log(JSON.parse(x));
-}
+if (localStorage.getItem('product_array')) {
+    for (let x in data) {
+        console.log(x);
+    }
 }
 
 
@@ -278,7 +276,7 @@ if(localStorage.getItem('product_array')){
 
 // for (var i = 0; i < cards.length; i++) {
 //     cards[i].addEventListener('click', function (event) {
-function addOnClick(e,x) {
+function addOnClick(e, x) {
     var clicked_element = e.target;
     if (clicked_element.closest('.add_to_cart') != null) {
         var card_parent = x.closest('.card');
@@ -471,8 +469,8 @@ function addOnClick(e,x) {
 
 
             }
-            
-            function saveStorage(){
+
+            function saveStorage() {
                 let parent = document.querySelectorAll(`[card_title="${product_name}"]`);
                 let count_of_products = parseInt(parent[0].querySelector('.products-count').textContent);
                 let price_sum = document.querySelector('.price-sums').textContent;
@@ -481,13 +479,18 @@ function addOnClick(e,x) {
                     "prd_count": count_of_products,
                     "prd_sum": price_sum,
                 }
-                data.push(JSON.stringify(saveData));
-                localStorage.setItem('product_array',data);
-                for (let x of data){
-                    if(x['prd_name']){
-
+                if (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i]['prd_name'] === saveData['prd_name']) {
+                            data[i]['prd_count'] = saveData['prd_count'];
+                            data[i]['prd_sum'] = saveData['prd_sum'];
+                        }
                     }
+                } else {
+                    data.push(saveData);
                 }
+                localStorage.setItem('product_array', JSON.stringify(data));
+
             }
 
 
@@ -558,11 +561,11 @@ function addOnClick(e,x) {
         document.querySelector('.unit-place').innerText = prdct_unit;
         let prdct_price = x.querySelector('.price-number').textContent;
         document.querySelector('.price-place').innerText = prdct_price;
-        
+
     }
-   
+
 }
-    
+
 
 //     })
 
